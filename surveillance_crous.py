@@ -151,7 +151,7 @@ def verification_unique():
     try:
         nombre_logements = obtenir_nombre_logements(session)
 
-        if True:
+        if nombre_logements > 0:
             print(f"[{datetime.now()}] {nombre_logements} logement(s) détecté(s) !")
             envoyer_email(nombre_logements)
         else:
