@@ -1,0 +1,28 @@
+name: Surveillance Crous
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch: {}
+
+jobs:
+  verifier-logements:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recuperer le depot
+        uses: actions/checkout@v4
+
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Installer les dependances
+        run: pip install requests
+
+      - name: Lancer la verification
+        env:
+          GMAIL_EXPEDITEUR: ${{ secrets.GMAIL_EXPEDITEUR }}
+          GMAIL_MOT_DE_PASSE_APPLICATION: ${{ secrets.GMAIL_MOT_DE_PASSE_APPLICATION }}
+          GMAIL_DESTINATAIRE: ${{ secrets.GMAIL_DESTINATAIRE }}
+        run: python surveillance_crous.py
